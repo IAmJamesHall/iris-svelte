@@ -1,18 +1,12 @@
 <script>
-    import Conversation from "../lib/Conversation.svelte";
-    import Usage from "../lib/Usage.svelte";
-    import { conversation, openAIKey } from "../lib/stores";
-    import { requestChatCompletion } from "../lib/gpt";
-    import { onMount } from "svelte";
+    import Conversation from "$lib/Conversation.svelte";
+    import Usage from "$lib/Usage.svelte";
+    import LocalStorage from '$lib/LocalStorage.svelte';
+    import { conversation } from "$lib/stores";
+    import { requestChatCompletion } from "$lib/gpt";
 
-    onMount(() => {
-        console.log("Running in the browser:", typeof window !== "undefined");
-        const key = localStorage.getItem('openAIKey') || "";
-        openAIKey.set(key);
-        console.log(key);
-        localStorage.setItem('hi', 'world');
-        console.log(localStorage);
-    })
+
+
 
 
     let content = "";
@@ -28,6 +22,10 @@
         ]);
     };
 
+    const clearConversation = () => {
+        conversation.update(conversation => [conversation[0]]);
+    }
+
     // hljs.highlightAll(); //TODO
 </script>
 
@@ -42,5 +40,7 @@
         bind:value={content}
     />
     <button on:click={sendMessage}>Chat</button>
+    <button on:click={clearConversation}>Clear</button>
     <Usage />
+    <LocalStorage />
 </div>
