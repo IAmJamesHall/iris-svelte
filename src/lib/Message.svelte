@@ -3,7 +3,8 @@
     export let content = "";
     export let id = "";
 
-    
+    import { marked } from "marked";
+
     let sender = "";
     if (role == "assistant") { sender = "Iris" }
     else if (role == "user") { sender = "You" }
@@ -11,6 +12,6 @@
 </script>
 
 <p class="message {role}" id={id}>
-    <b>{ sender }:</b> 
-    { content }
+    <b>{ sender }:</b><br />
+    {@html marked.parse(content) }
 </p>

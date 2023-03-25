@@ -7,7 +7,7 @@ const conversation = writable([
     }
 ]);
 
-const openAIKey = writable("<YOUR-API-KEY-HERE>");
+const openAIKey = writable("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");
 
 
 function createUsage() {

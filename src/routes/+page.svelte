@@ -13,7 +13,7 @@
         conversation.set([...$conversation, {role: "assistant", content: response}])
     }
 
-    hljs.highlightAll();
+    // hljs.highlightAll(); //TODO
 </script>
 
 <div id="container">
