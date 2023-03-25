@@ -27,5 +27,10 @@ function createUsage() {
 }
 const usage = createUsage();
 
+const settings = writable({
+	temperature: 0.8, 
+	model: "gpt-3.5-turbo"
+})
 
-export { conversation, openAIKey, usage };
+
+export { conversation, openAIKey, usage, settings };
