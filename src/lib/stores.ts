@@ -1,19 +1,31 @@
 import { writable } from 'svelte/store';
-// import { key } from './secrets';
 
-const conversation = writable([
-    {
-        role: "system",
-        content: "You are a helpful AI assistant whose name is Iris."
-    }
-]);
+const defaultValues = {
+	settings: {
+			temperature: 0.8,
+			model: "gpt-3.5-turbo",
+		},
+	conversation: [
+		{
+			role: "system",
+			content: "You are a helpful AI assistant whose name is Iris."
+		}
+	],
+	openAIKey: "",
+	usage: {tokens: 0, cost: 0},
+	}
+
+const conversation = writable(defaultValues.conversation);
+
+
+
 
 
 const openAIKey = writable("");
 
 
 function createUsage() {
-	const { subscribe, set, update } = writable({tokens: 0, cost: 0});
+	const { subscribe, set, update } = writable(defaultValues.usage);
 	return {
 		subscribe,
 		add: (tokens:number) => update(usage => {
@@ -23,15 +35,15 @@ function createUsage() {
 				cost: totalTokens * 0.000002
 			}}
 		),
-		reset: () => set({tokens: 0, cost: 0})
+		reset: () => set({tokens: 0, cost: 0}),
+		set
 	};
 }
 const usage = createUsage();
 
-const settings = writable({
-	temperature: 0.8, 
-	model: "gpt-3.5-turbo"
-})
+const settings = writable(defaultValues.settings);
 
 
-export { conversation, openAIKey, usage, settings };
+
+
+export { conversation, openAIKey, usage, settings, defaultValues };
