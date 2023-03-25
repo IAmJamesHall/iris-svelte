@@ -1,5 +1,6 @@
 <script>
     import { goto } from "$app/navigation";
+    import "../styles.css";
     import { settings, conversation, usage, defaultValues } from "$lib/stores"
     let temperature = $settings.temperature;
     let model = $settings.model;
@@ -21,7 +22,8 @@
 </script>
 
 <h1>Settings</h1>
-
+<p><b>Iris</b> is a wrapper for OpenAI's ChatGPT API. On this page you can edit any of the settings: system message, temperature, and model queried.</p>
+<p>All settings, conversations, and your API key are stored in your browser's local storage, never anywhere else.</p>
 <label for="system-message">System Message</label>
 <input type="text" name="system-message" id="system-message" bind:value={systemMessage}>
 
@@ -37,7 +39,7 @@
     <option value="gpt-4" disabled>gpt-4</option>
   </select>
 
-<button on:click={save}>Save</button>
+<button id="save" on:click={save}>Save Settings</button>
 
 <hr>
 

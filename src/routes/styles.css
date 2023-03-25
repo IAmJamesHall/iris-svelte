@@ -29,3 +29,26 @@
     font-size: 24px;
     margin-top: 50px;
   }
+
+  button#save {
+    margin-top: 50px;
+    width: 30%;
+    margin-bottom: 50px;
+  }
+
+  nav {
+    background-color: #333; /* navbar background color */
+    overflow: hidden; /* prevent content from overflowing */
+  }
+  
+  nav a {
+    float: left; /* float links to the left */
+    color: white; /* link text color */
+    text-align: center; /* center the link text */
+    padding: 14px 16px; /* add padding to the link */
+    text-decoration: none; /* remove underline from links */
+  }
+  
+  nav a:hover {
+    background-color: #ddd; /* add background color on hover */
+    color: black; /* change link text color on hover */

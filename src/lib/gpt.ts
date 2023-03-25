@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import { openAIKey, usage, settings } from './stores.js'
 
 let apiKey = "";
@@ -9,7 +10,6 @@ settings.subscribe(settings => {
   model = settings.model;
   temperature = settings.temperature;
 })
-
 
 console.log('apiKey:' + apiKey);
 
