@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { key } from './secrets';
 
 const conversation = writable([
     {
@@ -7,7 +8,7 @@ const conversation = writable([
     }
 ]);
 
-const openAIKey = writable("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");
+const openAIKey = writable(key);
 
 
 function createUsage() {

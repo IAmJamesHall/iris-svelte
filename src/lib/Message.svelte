@@ -11,7 +11,7 @@
     else if (role == "system") { sender = "System" }
 </script>
 
-<p class="message {role}" id={id}>
+<div class="message {role}" id={id}>
     <b>{ sender }:</b><br />
     {@html marked.parse(content) }
-</p>
+</div>
