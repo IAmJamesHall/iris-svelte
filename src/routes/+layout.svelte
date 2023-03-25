@@ -3,7 +3,11 @@
 </script>
 
 <nav>
+    <a href="/">Home</a>
     <a href="/settings">Settings</a>
+    <a href="/apikeys">API Keys</a>
 </nav>
 
-<slot></slot>
+<div id="container">
+    <slot></slot>
+</div>

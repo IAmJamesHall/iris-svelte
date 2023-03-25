@@ -1,16 +1,17 @@
 import { openAIKey, usage, settings } from './stores.js'
 
 let apiKey = "";
-const keyUnsub = openAIKey.subscribe(key => apiKey = key);
+openAIKey.subscribe(key => apiKey = key);
 
 let model = "gpt-3.5-turbo";
 let temperature = 0.8
-const settingsUnsub = settings.subscribe(settings => {
+settings.subscribe(settings => {
   model = settings.model;
   temperature = settings.temperature;
 })
-keyUnsub()
-settingsUnsub();
+
+
+console.log('apiKey:' + apiKey);
 
 export const requestChatCompletion = async (messages:any[]) => {
     return fetch("https://api.openai.com/v1/chat/completions", {
