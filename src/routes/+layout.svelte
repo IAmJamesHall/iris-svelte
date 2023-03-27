@@ -11,8 +11,8 @@
 
 <div id="container">
     <nav>
-        <a href="/">Home</a>
-        <a href="/settings">Settings</a>
+        <a href="/chat">chat</a>
+        <a href="/summarize">Summarize</a>
         <a href="/apikeys">API Keys</a>
     </nav>
     <slot></slot>

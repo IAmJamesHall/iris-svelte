@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { conversation, openAIKey, usage, settings, defaultValues } from "$lib/stores";
+    import { conversation, usage, settings, apiKeys, defaultValues } from "$lib/util/stores";
 
     
 
@@ -26,10 +26,10 @@
             localStorage.setItem('usage', JSON.stringify(usage));
         })
 
-        //OPENAI KEY
-        openAIKey.set(localStorage.getItem('openAIKey') || "");
-        openAIKey.subscribe(openAIKey => {
-            localStorage.setItem('openAIKey', openAIKey)
+        //API KEYS
+        apiKeys.set(JSON.parse(localStorage.getItem('apiKeys')) || defaultValues.apiKeys);
+        apiKeys.subscribe(apiKeys => {
+            localStorage.setItem('apiKeys', JSON.stringify(apiKeys))
         })
     });
 </script>

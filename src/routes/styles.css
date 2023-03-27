@@ -52,3 +52,14 @@
   nav a:hover {
     background-color: #ddd; /* add background color on hover */
     color: black; /* change link text color on hover */
+  }
+  
+button.danger {
+  background-color: rgb(147, 54, 54);
+  color: white;
+}
+
+button.primary {
+  background-color: rgb(55, 152, 55);
+  color: white;
+}

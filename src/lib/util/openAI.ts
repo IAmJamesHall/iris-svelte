@@ -1,8 +1,7 @@
-import { goto } from '$app/navigation';
-import { openAIKey, usage, settings } from './stores.js'
+import { apiKeys, usage, settings } from './stores.js'
 
 let apiKey = "";
-openAIKey.subscribe(key => apiKey = key);
+apiKeys.subscribe(apiKeys => apiKey = apiKeys.openAI);
 
 let model = "gpt-3.5-turbo";
 let temperature = 0.8
@@ -29,7 +28,7 @@ export const requestChatCompletion = async (messages:any[]) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        usage.add(data.usage.total_tokens)
+        usage.add(data.usage.total_tokens, "openAI")
         return data.choices[0].message.content
       });
   };
