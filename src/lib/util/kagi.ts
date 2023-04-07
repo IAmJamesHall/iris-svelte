@@ -6,15 +6,21 @@ apiKeys.subscribe(apiKeys => apiKey = apiKeys.kagi);
 let engine = "daphne"; //or agnes
 let summary_type = "summary" //or takeaway
 
-export const requestSummary = async (content: string) => {
-    return fetch("https://proxy.cors.sh/https://kagi.com/api/v0/summarize", {
+/**
+ * Summarizes the provided URL
+ * @param url url to summarize
+ * @returns summary of the url, provided by Kagi Universal Summarizer
+ */
+export const requestSummary = async (url: string) => {
+    return fetch("https://us-central1-smart-grin-379008.cloudfunctions.net/kagi-summarize", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bot ${apiKey}`
         },
         body: JSON.stringify({
-            url: content,
+            apiKey,
+            url,
             engine,
             summary_type,
         })
