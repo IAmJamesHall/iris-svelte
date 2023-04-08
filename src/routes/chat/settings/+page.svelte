@@ -44,9 +44,9 @@
 <b>Make sure you actually need GPT4 for your purposes. It's 10x the cost, and much slower. It's only useful in special circumstances.</b><br>
 {/if}
 
-<button id="save" on:click={save}>Save Settings</button>
+<button id="save" on:click={save} class="primary">Save Settings</button>
 
 <hr>
 
 <h2>Clear Stats</h2>
-<button on:click={clearStats}>Clear Token/Cost Stats</button>
+<button on:click={clearStats} class="danger">Clear Token/Cost Stats</button>
