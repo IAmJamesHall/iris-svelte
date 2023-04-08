@@ -11,9 +11,14 @@
         output: "",
         tokens: 0
     };
+    let emptyContent = content;
+    let loading = false;
+
     const summarize = async () => {
+        loading = true;
+        content = emptyContent;
         content = await requestSummary(url);
-        console.log(content);
+        loading = false;
     };
 
     onMount(() => {
@@ -31,8 +36,13 @@
     <!-- svelte-ignore a11y-autofocus -->
     <input type="text" placeholder="URL to summarize" bind:value={url} autofocus />
 
+
+
     <button on:click={summarize} class="primary">Summarize</button>
     <div>{content.output}</div>
+    {#if loading == true}
+    <h3>Loading</h3>
+    {/if}
     <p><a href="/summarize/settings">Settings</a></p>
     <LocalStorage />
 </div>

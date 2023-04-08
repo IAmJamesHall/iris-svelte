@@ -28,7 +28,8 @@
 
     onMount(() => {
         if (!$apiKeys.openAI) {
-        goto('/apikeys');
+            console.log('headed to /apikeys b/c its not in stores')
+            goto('/apikeys');
     }
     })
 
