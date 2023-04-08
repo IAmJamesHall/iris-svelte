@@ -1,5 +1,6 @@
 <script>
     import Conversation from "$lib/Conversation.svelte";
+    import Message from "$lib/Message.svelte";
     import Usage from "$lib/Usage.svelte";
     import LocalStorage from "$lib/LocalStorage.svelte";
     import { conversation, openAIKey } from "$lib/stores";
@@ -8,7 +9,9 @@
     import { onMount } from "svelte";
 
     let content = "";
+    let loading = false;
     const sendMessage = async () => {
+        loading = true;
         conversation.set([...$conversation, { role: "user", content }]);
         // conversation.update(c => c.push({sender:"User", message}));
         content = "";
@@ -18,7 +21,7 @@
             ...$conversation,
             { role: "assistant", content: response },
         ]);
-        // window.scrollTo(0, document.body.scrollHeight);
+        loading = false;
         document.querySelector('#usage')?.scrollIntoView();
     };
 
@@ -74,7 +77,12 @@
 
 <h1>Iris</h1>
 <Conversation conversation={$conversation} />
+{#if loading == true}
+<Message role="assistant" content="Loading..." />
+{/if}
+
 <div id="input-container">
+    
     <!-- svelte-ignore a11y-autofocus -->
     <textarea
         id="message"
