@@ -16,12 +16,14 @@ const defaultValues = {
 		openAI: "",
 		kagi: ""
 	},
-	usage: {tokens: 0, cost: 0},
+	usage: {
+		tokens: 0,
+		cost: 0
 	}
+}
 
 
 const conversation = writable(defaultValues.conversation);
-
 
 
 

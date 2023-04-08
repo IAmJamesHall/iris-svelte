@@ -5,6 +5,7 @@
     
 
     onMount(() => {
+        console.log('mounting <LocalStorage>')
         //SETTINGS
         settings.set(
             JSON.parse(localStorage.getItem("settings")) || defaultValues.settings
