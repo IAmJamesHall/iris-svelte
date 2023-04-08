@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import calculateCost from '$lib/pricing';
+import calculateCost from '$lib/util/pricing';
 
 const defaultValues = {
 	settings: {
@@ -12,7 +12,10 @@ const defaultValues = {
 			content: "You are a helpful AI assistant whose name is Iris."
 		}
 	],
-	openAIKey: "",
+	apiKeys: {
+		openAI: "",
+		kagi: ""
+	},
 	usage: {tokens: 0, cost: 0},
 	}
 
@@ -23,7 +26,7 @@ const conversation = writable(defaultValues.conversation);
 
 
 
-const openAIKey = writable("");
+const apiKeys = writable(defaultValues.apiKeys);
 
 
 function createUsage() {
@@ -49,4 +52,4 @@ const settings = writable(defaultValues.settings);
 
 
 
-export { conversation, openAIKey, usage, settings, defaultValues };
+export { conversation, apiKeys, usage, settings, defaultValues };

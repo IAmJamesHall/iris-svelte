@@ -1,8 +1,7 @@
-import { goto } from '$app/navigation';
-import { openAIKey, usage, settings } from './stores.js'
+import { apiKeys, usage, settings } from './stores.js'
 
 let apiKey = "";
-openAIKey.subscribe(key => apiKey = key);
+apiKeys.subscribe(apiKeys => apiKey = apiKeys.openAI);
 
 let model = "gpt-3.5-turbo";
 let temperature = 0.8

@@ -1,7 +1,7 @@
 <script>
     import { goto } from "$app/navigation";
-    import "../styles.css";
-    import { settings, conversation, usage, defaultValues } from "$lib/stores"
+    // import "../styles.css";
+    import { settings, conversation, usage, defaultValues } from "$lib/util/stores"
     let temperature = $settings.temperature;
     let model = $settings.model;
     let systemMessage = $conversation[0].content;
