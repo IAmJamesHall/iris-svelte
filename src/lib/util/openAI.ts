@@ -28,7 +28,11 @@ export const requestChatCompletion = async (messages:any[]) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        usage.add(data.usage.total_tokens, "openAI")
+        if (data.error) { return `ERROR: ${data.error.message}` }
+        usage.add(data.usage, model)
         return data.choices[0].message.content
-      });
+      })
+      .catch((error) => {
+        return error.message;
+      })
   };
