@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import calculateCost from '$lib/pricing';
 
 const defaultValues = {
 	settings: {
@@ -15,6 +16,7 @@ const defaultValues = {
 	usage: {tokens: 0, cost: 0},
 	}
 
+
 const conversation = writable(defaultValues.conversation);
 
 
@@ -28,11 +30,12 @@ function createUsage() {
 	const { subscribe, set, update } = writable(defaultValues.usage);
 	return {
 		subscribe,
-		add: (tokens:number) => update(usage => {
-			let totalTokens = usage.tokens + tokens
+		add: (usage:object, model:string) => update(pastUsage => {
+			const cost = calculateCost(usage.prompt_tokens, usage.completion_tokens, model);
+			const totalTokens = usage.prompt_tokens + usage.completion_tokens;
 			return {
-				tokens: totalTokens,
-				cost: totalTokens * 0.000002
+				tokens: pastUsage.tokens + totalTokens,
+				cost: pastUsage.cost + cost
 			}}
 		),
 		reset: () => set({tokens: 0, cost: 0}),
