@@ -13,7 +13,8 @@
 
     const save = () => {
         apiKeysStore.set(apiKeys)
-        goto('/chat');
+        if (apiKeys.openAI && !apiKeys.kagi) goto('/chat');
+        else goto('/');
     }
 
     
