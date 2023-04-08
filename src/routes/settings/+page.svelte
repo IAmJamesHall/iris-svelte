@@ -35,9 +35,13 @@
 
 <label for="model">ML Model</label>
 <select name="model" id="model" bind:value={model}>
-    <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
-    <option value="gpt-4" disabled>gpt-4</option>
+    <option value="gpt-3.5-turbo">gpt-3.5-turbo (4k token context)</option>
+    <option value="gpt-4">gpt-4 (8k token context)</option>
   </select>
+
+{#if model == "gpt-4"}
+<b>Make sure you actually need GPT4 for your purposes. It's 10x the cost, and much slower. It's only useful in special circumstances.</b><br>
+{/if}
 
 <button id="save" on:click={save}>Save Settings</button>
 
