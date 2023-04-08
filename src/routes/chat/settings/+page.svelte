@@ -13,12 +13,12 @@
             conversation[0].content = systemMessage;
             return conversation;
         })
-        goto('/');
+        goto('/chat');
     }
 
     const clearStats = () => {
         usage.set(defaultValues.usage);
-        goto('/');
+        goto('/chat');
     }
 </script>
 
