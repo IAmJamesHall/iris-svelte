@@ -18,7 +18,7 @@ export const requestSummary = async (url: string) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            "kagiApiKey": "AAAAeOscGQQ.jUPCModDnooma5cGlT8mSFBZlG2CLu-emw_x1LbwqVQ",
+            "kagiApiKey": apiKey,
             url
         })
     })
