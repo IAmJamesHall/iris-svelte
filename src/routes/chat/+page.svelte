@@ -2,29 +2,51 @@
     import Conversation from "$lib/Conversation.svelte";
     import Usage from "$lib/Usage.svelte";
     import LocalStorage from "$lib/LocalStorage.svelte";
-    import { conversation, apiKeys } from "$lib/util/stores";
+    import { conversations, apiKeys, defaultValues } from "$lib/util/stores";
     import { requestChatCompletion } from "$lib/util/openAI";
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
+    import calculateCost from "$lib/util/pricing";
 
     let content = "";
+    let conversationIndex = 0;
+    
+
+    $: usage = $conversations[conversationIndex].usage;
+
     const sendMessage = async () => {
-        conversation.set([...$conversation, { role: "user", content }]);
-        // conversation.update(c => c.push({sender:"User", message}));
+        let newConv = JSON.parse(JSON.stringify($conversations));
+        newConv[conversationIndex].messages.push({ role: "user", content })
+        conversations.set(newConv);
+        console.log(`convos just after sending a msg: ${newConv}`);
         content = "";
-        const response = await requestChatCompletion($conversation);
+        const response = await requestChatCompletion($conversations[conversationIndex].messages);
         console.log(response);
-        conversation.set([
-            ...$conversation,
-            { role: "assistant", content: response },
-        ]);
-        // window.scrollTo(0, document.body.scrollHeight);
+        newConv[conversationIndex].messages.push({ role: "assistant", content: response.message });
+        
+
+        // calculate cost
+        const { prompt_tokens, completion_tokens } = response.usage;
+        const cost = calculateCost(prompt_tokens, completion_tokens, response.model);
+        const totalTokens = prompt_tokens + completion_tokens;
+        const pastUsage = newConv[conversationIndex].usage;
+        newConv[conversationIndex].usage = {
+            tokens: pastUsage.tokens + totalTokens,
+            cost: pastUsage.cost + cost
+        }
+
+        conversations.set(newConv);
+        console.log(newConv);
+
         document.querySelector('#usage')?.scrollIntoView();
     };
 
     const clearConversation = () => {
-        conversation.update((conversation) => [conversation[0]]);
-    };
+        conversations.update(conversations => {
+            conversations[conversationIndex] = defaultValues.conversations[0];
+            return conversations;
+    });
+    }  
 
     onMount(() => {
         if (!$apiKeys.openAI) {
@@ -32,6 +54,10 @@
             goto('/apikeys');
     }
     })
+
+    const showConversations = () => {
+
+    }
 
 
     //Handle Enter to submit & Shift-Enter for newline
@@ -64,16 +90,10 @@
                 break;
         }
     }
-
-    // hljs.highlightAll(); //TODO
 </script>
 
-<!-- <svelte:window
-    on:keydown={onKeyDown}
-    on:keyup={onKeyUp}
-/> -->
 <h1>Iris</h1>
-<Conversation conversation={$conversation} />
+<Conversation conversation={$conversations[conversationIndex].messages} />
 <div id="input-container">
     <!-- svelte-ignore a11y-autofocus -->
     <textarea
@@ -86,7 +106,11 @@
     />
     <button on:click={sendMessage} class="primary">Chat (Enter)</button>
     <button on:click={clearConversation} class="danger">Clear Conversation</button>
-    <Usage api="openAI" />
+    
+    <Usage tokens={usage.tokens} cost={usage.cost} />
+    
     <p><a href="/chat/settings">Settings</a></p>
+    <hr>
+    <button on:click={sendMessage}>Change conversation</button>
     <LocalStorage />
 </div>

@@ -12,7 +12,7 @@
 
 
 
-<div id="container">
+<div id="app">
     <nav>
         <a href="/">Welcome</a>
         {#if $apiKeys.openAI}
@@ -23,6 +23,7 @@
         {/if}
         <a href="/apikeys">API Keys</a>
     </nav>
-    <slot></slot>
+    <div id="container"><slot></slot></div>
+
 </div>
 <LocalStorage />

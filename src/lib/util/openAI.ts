@@ -29,8 +29,12 @@ export const requestChatCompletion = async (messages:any[]) => {
       .then((data) => {
         console.log(data);
         if (data.error) { return `ERROR: ${data.error.message}` }
-        usage.add(data.usage, model)
-        return data.choices[0].message.content
+        // usage.add(data.usage, model)
+        return {
+          message: data.choices[0].message.content,
+          usage: data.usage,
+          model: model
+        }
       })
       .catch((error) => {
         return error.message;

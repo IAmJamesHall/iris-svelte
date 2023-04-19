@@ -1,11 +1,12 @@
 <script>
     import { onMount } from "svelte";
-    import { conversation, apiKeys, usage, settings, defaultValues } from "$lib/util/stores";
+    import { conversations, apiKeys, usage, settings, defaultValues } from "$lib/util/stores";
 
     
 
     onMount(() => {
         console.log('mounting <LocalStorage>')
+        // localStorage.setItem("conversations", "hello there");
         //SETTINGS
         settings.set(
             JSON.parse(localStorage.getItem("settings")) || defaultValues.settings
@@ -15,10 +16,10 @@
         });
 
 
-        //CONVERSATION
-        conversation.set(JSON.parse(localStorage.getItem('conversation')) || defaultValues.conversation);
-        conversation.subscribe((conversation) => {
-            localStorage.setItem("conversation", JSON.stringify(conversation));
+        //CONVERSATIONS
+        conversations.set(JSON.parse(localStorage.getItem('conversations')) || defaultValues.conversations);
+        conversations.subscribe((conversations) => {
+            localStorage.setItem("conversations", JSON.stringify(conversations));
         })
 
         //USAGE

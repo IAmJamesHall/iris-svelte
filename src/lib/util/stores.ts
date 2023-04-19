@@ -6,10 +6,18 @@ const defaultValues = {
 			temperature: 0.8,
 			model: "gpt-3.5-turbo",
 		},
-	conversation: [
+	conversations: [
 		{
-			role: "system",
-			content: "You are a helpful AI assistant whose name is Iris."
+			messages: [{
+				role: "system",
+				content: "You are a helpful AI assistant whose name is Iris."
+			}],
+			title: "Initial conversation",
+			usage: {
+				tokens: 0,
+				cost: 0
+			}
+
 		}
 	],
 	apiKeys: {
@@ -23,7 +31,7 @@ const defaultValues = {
 }
 
 
-const conversation = writable(defaultValues.conversation);
+const conversations = writable(defaultValues.conversations);
 
 
 
@@ -54,4 +62,4 @@ const settings = writable(defaultValues.settings);
 
 
 
-export { conversation, apiKeys, usage, settings, defaultValues };
+export { conversations, apiKeys, usage, settings, defaultValues };
