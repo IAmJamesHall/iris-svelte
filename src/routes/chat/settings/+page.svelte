@@ -41,6 +41,7 @@
         const newConv = $conversations;
         conversations.set(newConv);
         currentConversationIndex.set(0);
+        if ($conversations.length == 0) { conversations.set(defaultValues.conversations)} 
         goto('/chat');
     }
 
