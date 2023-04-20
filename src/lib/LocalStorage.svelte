@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { conversations, apiKeys, usage, settings, defaultValues } from "$lib/util/stores";
+    import { conversations, apiKeys, usage, currentConversationIndex, defaultValues } from "$lib/util/stores";
 
     
 
@@ -8,12 +8,12 @@
         console.log('mounting <LocalStorage>')
         // localStorage.setItem("conversations", "hello there");
         //SETTINGS
-        settings.set(
-            JSON.parse(localStorage.getItem("settings")) || defaultValues.settings
-        );
-        settings.subscribe((settings) => {
-            localStorage.setItem("settings", JSON.stringify(settings));
-        });
+        // settings.set(
+        //     JSON.parse(localStorage.getItem("settings")) || defaultValues.settings
+        // );
+        // settings.subscribe((settings) => {
+        //     localStorage.setItem("settings", JSON.stringify(settings));
+        // });
 
 
         //CONVERSATIONS
@@ -32,6 +32,12 @@
         apiKeys.set(JSON.parse(localStorage.getItem('apiKeys')) || defaultValues.apiKeys);
         apiKeys.subscribe(apiKeys => {
             localStorage.setItem('apiKeys', JSON.stringify(apiKeys))
+        })
+
+        //CURRENT CONVERSATION INDEX
+        currentConversationIndex.set(JSON.parse(localStorage.getItem('currentconversationIndex')) || defaultValues.currentConversationIndex);
+        currentConversationIndex.subscribe(currentConversationIndex => {
+            localStorage.setItem('currentConversationIndex', JSON.stringify(currentConversationIndex));
         })
     });
 </script>

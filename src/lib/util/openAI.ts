@@ -1,18 +1,13 @@
-import { apiKeys, usage, settings } from './stores.js'
+import { apiKeys } from './stores.js'
 
 let apiKey = "";
 apiKeys.subscribe(apiKeys => apiKey = apiKeys.openAI);
 
-let model = "gpt-3.5-turbo";
-let temperature = 0.8
-settings.subscribe(settings => {
-  model = settings.model;
-  temperature = settings.temperature;
-})
-
 console.log('apiKey:' + apiKey);
 
-export const requestChatCompletion = async (messages:any[]) => {
+export const requestChatCompletion = async (messages:any[], model:string, temperature:number) => {
+  if (!model) model = "gpt-3.5-turbo";
+  if (!temperature) temperature = 0.8;
     return fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {

@@ -2,14 +2,14 @@
     import Conversation from "$lib/Conversation.svelte";
     import Usage from "$lib/Usage.svelte";
     import LocalStorage from "$lib/LocalStorage.svelte";
-    import { conversations, apiKeys, defaultValues } from "$lib/util/stores";
+    import { conversations, apiKeys, defaultValues, currentConversationIndex } from "$lib/util/stores";
     import { requestChatCompletion } from "$lib/util/openAI";
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
     import calculateCost from "$lib/util/pricing";
 
     let content = "";
-    let conversationIndex = 0;
+    let conversationIndex = $currentConversationIndex;
     
 
     $: usage = $conversations[conversationIndex].usage;
@@ -20,7 +20,8 @@
         conversations.set(newConv);
         console.log(`convos just after sending a msg: ${newConv}`);
         content = "";
-        const response = await requestChatCompletion($conversations[conversationIndex].messages);
+        const { settings, messages } = $conversations[conversationIndex];
+        const response = await requestChatCompletion(messages, settings.model, settings.temperature);
         console.log(response);
         newConv[conversationIndex].messages.push({ role: "assistant", content: response.message });
         
@@ -48,6 +49,13 @@
     });
     }  
 
+    const newConversation = () => {
+        conversations.update(conversations => {
+            conversations.push(defaultValues.conversations[0])
+            return conversations;
+        })
+    }
+
     onMount(() => {
         if (!$apiKeys.openAI) {
             console.log('headed to /apikeys b/c its not in stores')
@@ -55,8 +63,10 @@
     }
     })
 
-    const showConversations = () => {
-
+    const changeConversation = (i) => {
+        console.log(`changing conversation to ${i}`)
+        currentConversationIndex.set(i);
+        conversationIndex = i;
     }
 
 
@@ -92,7 +102,7 @@
     }
 </script>
 
-<h1>Iris</h1>
+<h1>{$conversations[conversationIndex].title}</h1>
 <Conversation conversation={$conversations[conversationIndex].messages} />
 <div id="input-container">
     <!-- svelte-ignore a11y-autofocus -->
@@ -111,6 +121,12 @@
     
     <p><a href="/chat/settings">Settings</a></p>
     <hr>
-    <button on:click={sendMessage}>Change conversation</button>
+    <h3>Conversations</h3>
+    <ul>
+        {#each $conversations as { title }, i}
+        <li><button on:click={() => changeConversation(i)}>{title}</button></li>
+        {/each}
+    </ul>
+    <button on:click={newConversation}>New conversation</button>
     <LocalStorage />
 </div>

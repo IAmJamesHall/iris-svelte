@@ -1,18 +1,33 @@
 <script>
     import { goto } from "$app/navigation";
     import "./styles.css";
-    import { settings, conversation, usage, defaultValues } from "$lib/util/stores";
+    import { conversations, usage, defaultValues, currentConversationIndex } from "$lib/util/stores";
 
-    let temperature = $settings.temperature;
-    let model = $settings.model;
-    let systemMessage = $conversation[0].content;
+    const conversationIndex = $currentConversationIndex;
+    console.log($currentConversationIndex)
+    let settings = $conversations[conversationIndex].settings;
+    console.log(settings)
+    let temperature = settings.temperature;
+    let model = settings.model;
+    let systemMessage = $conversations[conversationIndex].messages[0].content;
+    let title = $conversations[conversationIndex].title;
 
     const save = () => {
-        settings.set({ temperature, model })
-        conversation.update(conversation => {
-            conversation[0].content = systemMessage;
-            return conversation;
+        conversations.update(conversations => {
+            const newSettings = {
+                temperature,
+                model
+            }
+            conversations[conversationIndex].settings = newSettings;
+            conversations[conversationIndex].messages[0].content = systemMessage;
+            conversations[conversationIndex].title = title;
+            return conversations;
         })
+        // settings.set({ temperature, model })
+        // conversations.update(conversations => {
+        //     conversations[0].content = systemMessage;
+        //     return conversations;
+        // })
         goto('/chat');
     }
 
@@ -20,13 +35,29 @@
         usage.set(defaultValues.usage);
         goto('/chat');
     }
+
+    const deleteConversation = () => {
+        $conversations.splice(conversationIndex, 1);
+        const newConv = $conversations;
+        conversations.set(newConv);
+        currentConversationIndex.set(0);
+        goto('/chat');
+    }
+
 </script>
 
 <h1>Settings</h1>
 <p><b>Iris</b> is a wrapper for OpenAI's ChatGPT API. On this page you can edit any of the settings: system message, temperature, and model queried.</p>
 <p>All settings, conversations, and your API key are stored in your browser's local storage, never anywhere else.</p>
+
+
+<label for="title">Title for conversation</label>
+<input type="text" name="title" id="title" bind:value={title}>
+
 <label for="system-message">System Message</label>
 <input type="text" name="system-message" id="system-message" bind:value={systemMessage}>
+
+
 
 <label for="temperature">Temperature</label>
 <input type="range" min=0 max=1 step=0.1 id="temperature" bind:value={temperature}/>
@@ -48,5 +79,8 @@
 
 <hr>
 
-<h2>Clear Stats</h2>
-<button on:click={clearStats} class="danger">Clear Token/Cost Stats</button>
+<h2>Delete Conversation</h2>
+<button on:click={deleteConversation} class="danger">Delete current conversation</button>
+<!-- 
+h2>Clear Stats</h2>
+<button on:click={clearStats} class="danger">Clear Token/Cost Stats</button> -->
