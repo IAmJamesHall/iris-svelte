@@ -5,7 +5,7 @@ apiKeys.subscribe(apiKeys => apiKey = apiKeys.openAI);
 
 console.log('apiKey:' + apiKey);
 
-export const requestChatCompletion = async (messages:any[], model:string, temperature:number) => {
+export const requestChatCompletion = async (messages:any[], model:string | undefined, temperature:number | undefined) => {
   if (!model) model = "gpt-3.5-turbo";
   if (!temperature) temperature = 0.8;
     return fetch("https://api.openai.com/v1/chat/completions", {

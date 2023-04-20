@@ -40,11 +40,23 @@
         console.log(newConv);
 
         document.querySelector('#usage')?.scrollIntoView();
+
+        //generate a title for the conversation
+        if (newConv[conversationIndex].messages.length == 3) {
+            console.log('generating title');
+            console.log(messages);
+            const newMessages = [...messages, {role: "user", content: "based on my first message, write a short title for this conversation. Do not include quotation marks, and make the title less than 20 characters long. If the person is just saying 'hi', simply put something like 'Greetings'"}];
+
+            const title = await requestChatCompletion(newMessages);
+            newConv[conversationIndex].title = title.message;
+            conversations.set(newConv);
+        }
     };
 
     const clearConversation = () => {
         conversations.update(conversations => {
-            conversations[conversationIndex] = defaultValues.conversations[0];
+            const systemMessage = conversations[conversationIndex].messages.slice(0, 1);
+            conversations[conversationIndex].messages = systemMessage;
             return conversations;
     });
     }  
@@ -127,6 +139,6 @@
         <li><button on:click={() => changeConversation(i)}>{title}</button></li>
         {/each}
     </ul>
-    <button on:click={newConversation}>New conversation</button>
+    <button class="primary" on:click={newConversation}>New conversation</button>
     <LocalStorage />
 </div>
