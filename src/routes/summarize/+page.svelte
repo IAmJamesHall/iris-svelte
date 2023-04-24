@@ -31,7 +31,7 @@
 </script>
 
 
-<h1>Kagi Summarize</h1>
+<h1 class="title is-2">Kagi Summarize</h1>
 <div id="input-container">
     <!-- svelte-ignore a11y-autofocus -->
     <input type="text" placeholder="URL to summarize" bind:value={url} autofocus />

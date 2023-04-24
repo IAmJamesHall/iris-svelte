@@ -1,65 +1,15 @@
-.message {
-    border-color: #b9b9b9;
-    border-width: 0.1px;
-    border-style: solid;
-    padding: 10px;
-    border-radius: 5px;
-    position: relative;
-    margin-bottom: 10px;
-}
-
-.message > p {
-  margin-bottom: 0px;
-  margin-top: 10px;
-}
-
-.tokens {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 12px;
-  }
-
-  #container {
+#app {
     max-width: 600px;
     margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .navbar {
+    align-content: center;
+    justify-content: center;
   }
 
   label {
-    font-size: 24px;
-    margin-top: 50px;
+    font-weight: bold;
   }
-
-  button#save {
-    margin-top: 50px;
-    width: 30%;
-    margin-bottom: 50px;
-  }
-
-  nav {
-    background-color: #333; /* navbar background color */
-    overflow: hidden; /* prevent content from overflowing */
-  }
-  
-  nav a {
-    float: left; /* float links to the left */
-    color: white; /* link text color */
-    text-align: center; /* center the link text */
-    padding: 14px 16px; /* add padding to the link */
-    text-decoration: none; /* remove underline from links */
-  }
-  
-  nav a:hover {
-    background-color: #ddd; /* add background color on hover */
-    color: black; /* change link text color on hover */
-  }
-  
-button.danger {
-  background-color: rgb(147, 54, 54);
-  color: white;
-}
-
-button.primary {
-  background-color: rgb(55, 152, 55);
-  color: white;
-}

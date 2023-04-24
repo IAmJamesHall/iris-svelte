@@ -2,14 +2,22 @@ import { writable } from 'svelte/store';
 import calculateCost from '$lib/util/pricing';
 
 const defaultValues = {
-	settings: {
-			temperature: 0.8,
-			model: "gpt-3.5-turbo",
-		},
-	conversation: [
+	conversations: [
 		{
-			role: "system",
-			content: "You are a helpful AI assistant whose name is Iris."
+			messages: [{
+				role: "system",
+				content: "You are a helpful AI assistant whose name is Iris."
+			}],
+			title: "New conversation",
+			usage: {
+				tokens: 0,
+				cost: 0
+			},
+			settings: {
+				temperature: 0.8,
+				model: "gpt-3.5-turbo"
+			}
+
 		}
 	],
 	apiKeys: {
@@ -19,13 +27,14 @@ const defaultValues = {
 	usage: {
 		tokens: 0,
 		cost: 0
-	}
+	},
+	currentConversationIndex: 0
 }
 
 
-const conversation = writable(defaultValues.conversation);
+const conversations = writable(defaultValues.conversations);
 
-
+const currentConversationIndex = writable(defaultValues.currentConversationIndex);
 
 
 const apiKeys = writable(defaultValues.apiKeys);
@@ -49,9 +58,7 @@ function createUsage() {
 }
 const usage = createUsage();
 
-const settings = writable(defaultValues.settings);
 
 
 
-
-export { conversation, apiKeys, usage, settings, defaultValues };
+export { conversations, apiKeys, usage, currentConversationIndex, defaultValues };
