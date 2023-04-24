@@ -82,9 +82,8 @@
 <div class="field">
     <label for="system-message">System Message</label>
     <div class="control">
-        <input
-            type="text"
-            class="input"
+        <textarea
+            class="textarea"
             name="system-message"
             id="system-message"
             bind:value={systemMessage}

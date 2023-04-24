@@ -19,6 +19,9 @@
     $: usage = $conversations[conversationIndex].usage;
 
     const sendMessage = async () => {
+        const chatButton = document.querySelector('#chat');
+        chatButton.classList.add('is-loading');
+
         let newConv = JSON.parse(JSON.stringify($conversations));
         newConv[conversationIndex].messages.push({ role: "user", content });
         conversations.set(newConv);
@@ -51,7 +54,7 @@
         };
 
         conversations.set(newConv);
-        console.log(newConv);
+        chatButton.classList.remove('is-loading');
 
         document.querySelector("#usage")?.scrollIntoView();
 
@@ -149,8 +152,7 @@
         autofocus
         bind:value={content}
         on:keydown={onKeyDown}
-        on:keyup={onKeyUp}
-    />
+        on:keyup={onKeyUp}></textarea>
 </div>
 {#if $conversations[conversationIndex].settings.model == "gpt-4"}
 <div class="block">
@@ -161,11 +163,11 @@
 </div>
 {/if}
 <div class="block">
-    <button class="button is-primary" on:click={sendMessage}
+    <button class="button is-primary" id="chat" on:click={sendMessage}
         >Chat (Enter)</button>  
     <div class="float-right">
-        <a href="/chat/settings" class="button is-light">Settings</a>
-        <button on:click={clearConversation} class="button is-danger is-light">
+        <a href="/chat/settings" class="button is-outlined">Settings</a>
+        <button on:click={clearConversation} class="button is-danger is-light is-outlined">
             Clear Conversation
         </button>
     </div>
