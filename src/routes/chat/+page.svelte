@@ -16,6 +16,8 @@
     let content = "";
     let conversationIndex = $currentConversationIndex;
 
+    const { settings, messages } = $conversations[conversationIndex];
+
     $: usage = $conversations[conversationIndex].usage;
 
     const sendMessage = async () => {
@@ -27,7 +29,7 @@
         conversations.set(newConv);
         console.log(`convos just after sending a msg: ${newConv}`);
         content = "";
-        const { settings, messages } = $conversations[conversationIndex];
+        
         const response = await requestChatCompletion(
             messages,
             settings.model,
@@ -173,7 +175,7 @@
     </div>
 </div>
 <div class="block">
-    <Usage tokens={usage.tokens} cost={usage.cost} />
+    <Usage tokens={usage.tokens} cost={usage.cost} />Model: {settings.model}
 </div>
 
 <hr />
