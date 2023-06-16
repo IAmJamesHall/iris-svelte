@@ -110,9 +110,8 @@
     <div class="control">
         <div class="select is-rounded">
             <select name="model" id="model" bind:value={model}>
-                <option value="gpt-3.5-turbo"
-                    >gpt-3.5-turbo (4k token context)</option
-                >
+                <option value="gpt-3.5-turbo">gpt-3.5-turbo (4k token context)</option>
+                <option value="gpt-3.5-turbo-16k">gpt-3.5-turbo (16k token context)</option>
                 <option value="gpt-4">gpt-4 (8k token context)</option>
             </select>
         </div>
@@ -130,9 +129,7 @@
 </div>
 <div class="field is-grouped">
     <div class="control">
-    <button class="button is-primary" id="save" on:click={save}
-        >Save Settings</button
-    >
+    <button class="button is-primary" id="save" on:click={save}>Save Settings</button>
 </div>
 <div class="control">
     <button on:click={deleteConversation} class="button is-danger is-light">Delete current conversation</button>
